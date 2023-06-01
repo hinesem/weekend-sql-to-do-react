@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './App.css';
 
 function getTask() { // function getTask() will return the tasks from /tasks route, and return them in json format
   return fetch('/todo')
@@ -30,7 +31,10 @@ function App() {
   //on lead, call getTask function
   useEffect(() => {
     console.log('Fetching task');
-    getTask().then(tasks => setTaskList(tasks));
+    getTask().then(tasks => {
+      console.log(tasks)
+      setTaskList(tasks)
+    });
   }, []);//end useEffect
 
   const handleAddTask = (event) => { //arrow function sets copmonent fields to be empty
@@ -64,21 +68,22 @@ function App() {
       </div>
       <section className="new-task-section">
         <form onSubmit={handleAddTask}>
-          <label htmlForm="task-input">Task</label>
-          <input type="text" placeholder='task' value={taskName} onChange={(updateTask)} />
-          <label htmlForm="status-input">Status</label>
-          <input type="text" placeholder='status' value={taskStatus} onChange={(updateTaskStatus)} />
-          <label htmlForm="desc-input">Description</label>
-          <input type="text" placeholder='description' value={taskDescription} onChange={(udpateTaskDescription)} />
-          <ipnut id="desc-input" onChange={event => setTaskDescription(event.target.value)} />
+          <input type="text" placeholder='task' value={taskName} onChange={updateTask} />
+          <label htmlFor="status-input">Status</label>
+          <input type="text" placeholder='status' value={taskStatus} onChange={updateTaskStatus} />
+          <label htmlFor="desc-input">Description</label>
+          <input type="text" placeholder='description' value={taskDescription} onChange={udpateTaskDescription} />
+          <input id="desc-input" onChange={event => setTaskDescription(event.target.value)} />
           <button type="submit">add task</button>
         </form>
         <ul>
-          {taskList.map((task, i) => (
-            <li key={i}>
-              {task.taskName}, {task.taskStatus}, {task.taskDescription}
-            </li>
-          ))}
+          {taskList.map((task, i) => {
+            return (
+              <li key={i}>
+                {task.status ? <span className="taskComplete">DONE</span> : <span className="taskIncomplete">UNCOMPLETE</span>}{' '}
+                {task.task} {task.status} {task.description} {/* render what I get back from DB, not related to components. Name, and not taskName. task.task -> structuring to my BD table*/}
+              </li>)
+          })}
         </ul>
       </section>
     </div>
