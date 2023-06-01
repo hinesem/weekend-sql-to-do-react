@@ -1,6 +1,8 @@
 const express = require('express');
+const pg = require('pg');
 const app = express();
 const todoRouter = require('./routes/todo.router.js');
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5001;
 
 /** ---------- MIDDLEWARE ---------- **/
