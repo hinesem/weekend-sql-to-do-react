@@ -16,14 +16,19 @@ router.get('/', (req, res) => {
 });
 
 // POST
-router.post('/', (reg, res) => {
-    const newTask = req.body;
+router.post('/', (req, res) => {
+    //TODO look up object destructuring
+    //const {taskName, taskStatus, taskDescription} = req.body; <- pulls out key names and sets them as variables IOT write code better. 21, 29 preferred. which are syn w 23 & 28
+    console.log(req.body);
+    let newTask = req.body;
     const queryText = `
     INSERT INTO "tasks" ("task", "status", "description")
     VALUES ($1, $2, $3);`;
-    pool.query(queryText, [newTask.task, newTask.status, newTask.description])
+    // pool.query(queryText, [newTask.taskName, newTask.status, newTask.description])
+    pool.query(queryText, [newTask.taskName, newTask.taskStatus, newTask.taskDescription])
+    //pool.query(queryText, [taskName, taskStatus, taskDescription])
 
-        .then((resutl) => {
+        .then((result) => {
             res.sendStatus(201);
         })
         .catch((err) => {
@@ -51,7 +56,7 @@ router.put('/:id', (req, res) => {
 
 // DELETE
 router.delete('/:id', (req, res) => {
-    let deleteTask = req.body.id;
+    let deleteTask = req.params.id; //it's not req.body.id it's req.params (anything with /:id => req.params.id  or req.params.taco or req.params.name)
     console.log('Delete task for id', deleteTask);
     let sqlText = `DELETE FROM tasks WHERE id=${deleteTask}`;
     pool.query(sqlText)
