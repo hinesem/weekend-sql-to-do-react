@@ -98,9 +98,10 @@ function App() {
           {taskList.map((task, i) => {
             return (
 
-              <li key={task.id}>
+              <li className={task.status ? "complete" : "incomplete"} key={task.id}>
+                {i + 1}
                 {task.status ? <span className="taskComplete">DONE</span> : <span className="taskIncomplete">INCOMPLETE</span>}{' '}
-                {task.id} {task.task} {task.status} {task.description} {/* render what I get back from DB, not related to components. Name, and not taskName. task.task -> structuring to my BD table */}
+                {task.task} {task.status} {task.description} {/* render what I get back from DB, not related to components. Name, and not taskName. task.task -> structuring to my BD table */}
                 <button type="button" onClick={() => editTask(task.id)}>edit</button>
                 <button type="button" onClick={() => deleteTask(task.id)}>delete task</button>
                 <button>mark as complete</button>

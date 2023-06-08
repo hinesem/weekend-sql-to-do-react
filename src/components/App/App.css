@@ -21,3 +21,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.complete {
+  background-color: red;
+}
+
+.incomplete {
+  background-color: rgb(92, 158, 59);
+}
